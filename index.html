@@ -3,21 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KMU AI Lab Seminar Archive</title>
+  <title>Lab Seminar Archive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f3f0e8;
-      --paper: #fbfaf6;
-      --ink: #211b14;
-      --muted: #6b6154;
-      --line: #d9d0c2;
-      --paper-accent: #7a3b1e;
-      --vibe-accent: #184f6f;
-      --math-accent: #315f2a;
-      --soft-shadow: 0 10px 32px rgba(37, 26, 13, 0.08);
+      --blue: #2563eb;
+      --blue-soft: #eff5ff;
+      --blue-line: #c7d8ff;
+      --ink: #19202c;
+      --muted: #61708a;
+      --white: #ffffff;
+      --radius: 18px;
     }
 
     * {
@@ -26,774 +24,273 @@
       padding: 0;
     }
 
+    html,
     body {
-      min-height: 100vh;
-      font-family: 'Source Serif 4', Georgia, serif;
+      width: 100%;
+      min-height: 100%;
+      background: var(--white);
       color: var(--ink);
-      background:
-        radial-gradient(circle at 10% 10%, #f7f2e9 0%, transparent 44%),
-        radial-gradient(circle at 90% 20%, #f1ece2 0%, transparent 42%),
-        var(--bg);
-      line-height: 1.65;
+      font-family: 'Gowun Dodum', sans-serif;
+      scroll-behavior: smooth;
     }
 
-    a {
-      color: inherit;
+    .top-ribbon {
+      width: 100%;
+      height: 84px;
+      background: linear-gradient(90deg, #1f4fd0, #2f7dff);
     }
 
     .container {
-      width: min(1120px, calc(100% - 2.4rem));
+      width: min(980px, calc(100% - 2rem));
       margin: 0 auto;
     }
 
-    .page-header {
-      border-bottom: 2px solid var(--ink);
-      margin-bottom: 2rem;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%);
+    .hero {
+      margin-top: -42px;
+      text-align: center;
+      padding-bottom: 1.1rem;
     }
 
-    .masthead {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 1.25rem;
-      padding: 2rem 0 2.1rem;
-      align-items: stretch;
+    .page-title {
+      font-family: 'Gaegu', cursive;
+      font-size: clamp(2.2rem, 5.2vw, 3.5rem);
+      font-weight: 700;
+      background: #fff;
+      border: 2px solid #d4e2ff;
+      border-radius: 999px;
+      padding: 0.62rem 1.65rem;
+      color: #17306e;
+      cursor: pointer;
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.14);
     }
 
-    .masthead-main {
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-left: 4px solid var(--ink);
-      padding: 1.4rem 1.35rem 1.5rem;
-      box-shadow: var(--soft-shadow);
-    }
-
-    .masthead-tag {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.74rem;
-      letter-spacing: 0.14em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 0.8rem;
-    }
-
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 4.6vw, 3.4rem);
-      font-weight: 600;
-      line-height: 1.05;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.02em;
-    }
-
-    .subtitle {
-      color: var(--muted);
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.95rem;
-      margin-bottom: 1.2rem;
-    }
-
-    .external-link {
+    .lab-link {
       display: inline-flex;
-      align-items: center;
       justify-content: center;
-      gap: 0.55rem;
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 1rem;
-      font-weight: 600;
-      text-decoration: none;
-      background: var(--ink);
-      color: #fff;
-      padding: 0.8rem 1.2rem;
-      border-radius: 10px;
-      transition: transform 0.16s ease, opacity 0.16s ease;
-      margin-bottom: 0.8rem;
-    }
-
-    .external-link:hover {
-      transform: translateY(-2px);
-      opacity: 0.94;
-    }
-
-    .hero-note {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.83rem;
-      color: var(--muted);
-    }
-
-    .hero-panel {
-      position: relative;
-      min-height: 280px;
-      border: 1px solid var(--line);
-      background:
-        linear-gradient(140deg, rgba(24, 79, 111, 0.36), rgba(122, 59, 30, 0.36)),
-        linear-gradient(90deg, #d8d0c5, #e7dfd3);
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      box-shadow: var(--soft-shadow);
-      isolation: isolate;
-    }
-
-    .hero-panel::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.03), rgba(0, 0, 0, 0.52));
-      z-index: -1;
-    }
-
-    .hero-overlay {
-      padding: 1.2rem;
-      color: #f8f4ec;
-    }
-
-    .hero-overlay h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.45rem;
-      font-weight: 600;
-      margin-bottom: 0.2rem;
-    }
-
-    .hero-overlay p {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.82rem;
-      opacity: 0.92;
-    }
-
-    .hero-controls {
-      border-top: 1px solid rgba(255, 255, 255, 0.35);
-      padding: 0.78rem 1rem;
-      background: rgba(12, 9, 6, 0.36);
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
       align-items: center;
-    }
-
-    .hero-controls label {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.78rem;
+      margin-top: 1rem;
+      text-decoration: none;
+      background: var(--blue);
       color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      border-radius: 8px;
-      padding: 0.4rem 0.7rem;
-      cursor: pointer;
-      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 0.72rem 2rem;
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      transition: transform 0.16s ease, opacity 0.16s ease;
     }
 
-    .hero-controls input[type='file'] {
-      display: none;
-    }
-
-    .hero-controls button {
-      border: 1px solid rgba(255, 255, 255, 0.45);
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      border-radius: 8px;
-      padding: 0.4rem 0.7rem;
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.78rem;
-      cursor: pointer;
-    }
-
-    .hero-file-name {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.76rem;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .page-main {
-      padding-bottom: 4rem;
-    }
-
-    .section-heading {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-size: 0.72rem;
-      color: var(--muted);
-      margin-bottom: 0.9rem;
-    }
-
-    .category-nav {
-      margin-bottom: 1.2rem;
-    }
-
-    .category-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.8rem;
-    }
-
-    .category-card {
-      border: 1px solid var(--line);
-      background: var(--paper);
-      padding: 1rem;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-      box-shadow: 0 6px 18px rgba(32, 20, 7, 0.05);
-      transition: transform 0.16s ease, border-color 0.16s ease;
-    }
-
-    .category-card:hover {
+    .lab-link:hover {
       transform: translateY(-2px);
+      opacity: 0.95;
     }
 
-    .category-card.is-active {
-      border-width: 2px;
+    .main {
+      padding: 1.2rem 0 4rem;
+      display: grid;
+      gap: 2.1rem;
     }
 
-    .category-paper.is-active {
-      border-color: var(--paper-accent);
+    .section-title {
+      font-family: 'Gaegu', cursive;
+      font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+      margin-bottom: 0.9rem;
+      color: #1e3a8a;
     }
 
-    .category-vibe.is-active {
-      border-color: var(--vibe-accent);
+    .category-list {
+      display: grid;
+      gap: 0.9rem;
     }
 
-    .category-math.is-active {
-      border-color: var(--math-accent);
+    .category-link {
+      text-decoration: none;
+      border: 2px solid var(--blue-line);
+      border-radius: var(--radius);
+      background: var(--blue-soft);
+      padding: 1.2rem 1.3rem;
+      transition: transform 0.16s ease, border-color 0.16s ease;
+      display: grid;
+      gap: 0.45rem;
+      min-height: 132px;
+    }
+
+    .category-link:hover {
+      transform: translateY(-2px);
+      border-color: #6d95f8;
     }
 
     .category-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 600;
-      line-height: 1.1;
+      font-family: 'Gaegu', cursive;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: #1945b4;
+      line-height: 1;
     }
 
     .category-desc {
       color: var(--muted);
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.84rem;
-      min-height: 2.5em;
+      font-size: 0.98rem;
+      line-height: 1.5;
+      max-width: 70ch;
     }
 
-    .category-enter {
-      margin-top: auto;
-      border: 1px solid var(--line);
-      background: #fff;
-      border-radius: 7px;
-      padding: 0.5rem 0.72rem;
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .category-enter:hover {
-      border-color: var(--ink);
-    }
-
-    .active-status {
-      margin-bottom: 1.1rem;
-      background: #f6f1e7;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 0.75rem 0.85rem;
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      color: var(--muted);
-      font-size: 0.86rem;
-    }
-
-    .active-status strong {
-      color: var(--ink);
-    }
-
-    .category-panels {
-      display: grid;
-      gap: 1rem;
-    }
-
-    .category-panel {
-      display: none;
-      border: 1px solid var(--line);
-      background: var(--paper);
-      border-radius: 12px;
+    .preview-board {
+      border: 1px solid #d9e5ff;
+      border-radius: var(--radius);
+      background: #fafcff;
       padding: 1rem;
-      box-shadow: var(--soft-shadow);
-    }
-
-    .category-panel.is-active {
-      display: block;
-      animation: fadeIn 0.25s ease;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(4px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .panel-header {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.9rem;
-      padding-bottom: 0.9rem;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .panel-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
-      font-weight: 600;
-      line-height: 1.1;
-    }
-
-    .panel-subtitle {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-
-    .panel-tag {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.77rem;
-      font-weight: 600;
-      border-radius: 7px;
-      padding: 0.24rem 0.54rem;
-      border: 1px solid currentColor;
-    }
-
-    .tag-paper {
-      color: var(--paper-accent);
-      background: #f6e8e2;
-    }
-
-    .tag-vibe {
-      color: var(--vibe-accent);
-      background: #e2edf3;
-    }
-
-    .tag-math {
-      color: var(--math-accent);
-      background: #e5f0e2;
-    }
-
-    .upload-box {
-      border: 1px dashed var(--line);
-      border-radius: 10px;
-      padding: 0.95rem;
-      margin-bottom: 1rem;
-      background: #fff;
-    }
-
-    .upload-box h3 {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.9rem;
-      margin-bottom: 0.6rem;
-    }
-
-    .upload-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.7rem;
+      gap: 1.2rem;
     }
 
-    .field {
-      display: flex;
-      flex-direction: column;
-      gap: 0.22rem;
-    }
-
-    .field-full {
-      grid-column: 1 / -1;
-    }
-
-    .field label {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.76rem;
-      color: var(--muted);
-    }
-
-    .field input,
-    .field select {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 0.52rem 0.62rem;
-      font: inherit;
-      background: #fff;
-    }
-
-    .upload-hint {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.74rem;
-      color: var(--muted);
-      margin-top: 0.2rem;
-    }
-
-    .upload-actions {
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-      margin-top: 0.7rem;
-    }
-
-    .upload-actions button {
-      border: none;
-      border-radius: 8px;
-      padding: 0.56rem 0.92rem;
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.84rem;
-      font-weight: 600;
-      background: var(--ink);
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .save-msg {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.78rem;
-      color: var(--muted);
-      min-height: 1.2em;
-    }
-
-    .entry-list {
+    .preview-group {
       display: grid;
-      gap: 0.7rem;
+      gap: 0.62rem;
     }
 
-    .entry-card {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 0.85rem;
-      background: #fff;
+    .preview-group h3 {
+      font-family: 'Gaegu', cursive;
+      font-size: 1.9rem;
+      color: #1f4fb6;
+      line-height: 1;
+    }
+
+    .preview-list {
       display: grid;
-      gap: 0.5rem;
+      gap: 0.58rem;
     }
 
-    .entry-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
-
-    .entry-date {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.74rem;
-      color: var(--muted);
-    }
-
-    .entry-title {
-      font-size: 1.05rem;
-      font-weight: 600;
-      line-height: 1.25;
-      letter-spacing: -0.005em;
-    }
-
-    .entry-presenter {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.84rem;
-      color: var(--muted);
-    }
-
-    .entry-file {
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.8rem;
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-      padding-top: 0.45rem;
-    }
-
-    .entry-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-    }
-
-    .entry-actions button,
-    .entry-actions a {
-      border: 1px solid var(--line);
-      border-radius: 7px;
-      padding: 0.33rem 0.6rem;
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.77rem;
-      font-weight: 500;
+    .preview-card {
+      border: 1px solid #d8e2f8;
+      border-radius: 12px;
       background: #fff;
-      color: var(--ink);
-      text-decoration: none;
-      cursor: pointer;
+      padding: 0.72rem 0.84rem;
+      display: grid;
+      gap: 0.35rem;
     }
 
-    .entry-actions .open-btn {
-      border-color: var(--ink);
-    }
-
-    .entry-actions .delete-btn {
-      border-color: #8a2d2d;
-      color: #8a2d2d;
-    }
-
-    .empty-list {
-      border: 1px dashed var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 0.9rem;
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      color: var(--muted);
+    .preview-meta {
       font-size: 0.83rem;
+      color: #6c7a94;
+    }
+
+    .preview-title {
+      font-size: 1.04rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: #1d2a43;
+    }
+
+    .preview-desc {
+      font-size: 0.92rem;
+      color: #3f4f67;
+      line-height: 1.42;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .preview-empty {
+      border: 1px dashed #cfdcf8;
+      border-radius: 10px;
+      background: #fff;
+      padding: 0.72rem 0.84rem;
+      color: #6e7c96;
+      font-size: 0.9rem;
+    }
+
+    .preview-more {
+      width: fit-content;
+      text-decoration: none;
+      font-size: 0.86rem;
+      color: #1f4fb6;
+      border: 1px solid #a8c0ff;
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      background: #f4f8ff;
     }
 
     footer {
-      border-top: 1px solid var(--line);
-      padding: 1.3rem 0 1.8rem;
-      font-family: 'IBM Plex Sans KR', sans-serif;
-      font-size: 0.75rem;
-      color: var(--muted);
+      border-top: 1px solid #dce7ff;
       text-align: center;
-    }
-
-    @media (max-width: 960px) {
-      .masthead {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-panel {
-        min-height: 240px;
-      }
-
-      .category-grid {
-        grid-template-columns: 1fr;
-      }
+      color: #70809b;
+      font-size: 0.82rem;
+      padding: 1rem 0 1.35rem;
+      font-family: 'Gowun Dodum', sans-serif;
     }
 
     @media (max-width: 640px) {
       .container {
-        width: min(1120px, calc(100% - 1.2rem));
+        width: min(980px, calc(100% - 1.1rem));
       }
 
-      .upload-grid {
-        grid-template-columns: 1fr;
+      .page-title {
+        padding: 0.58rem 1.1rem;
       }
 
-      .page-header {
-        margin-bottom: 1.2rem;
+      .category-link {
+        min-height: 118px;
       }
 
-      .masthead {
-        padding-top: 1.2rem;
+      .preview-group h3 {
+        font-size: 1.7rem;
       }
     }
   </style>
 </head>
 <body>
-  <header class="page-header">
-    <div class="container masthead">
-      <section class="masthead-main">
-        <p class="masthead-tag">Kookmin AI Lab · Study Archive</p>
-        <h1>Research Seminar Chronicle</h1>
-        <p class="subtitle">논문 세미나 · 바이브코딩 · 수학스터디 자료를 카테고리 안에서 직접 업로드하고 관리합니다.</p>
-        <a class="external-link" href="https://ailab.kookmin.ac.kr/" target="_blank" rel="noreferrer noopener">
-          KMU AI LAB 공식 홈페이지 바로가기
-        </a>
-        <p class="hero-note">GitHub Pages 정적 환경 특성상 업로드 파일은 현재 브라우저(로컬 IndexedDB)에 저장됩니다.</p>
-      </section>
+  <div id="pageTop"></div>
+  <div class="top-ribbon"></div>
 
-      <aside class="hero-panel" id="heroPanel" aria-label="타이틀 이미지 패널">
-        <div class="hero-overlay">
-          <h2>Title Visual</h2>
-          <p>연구실 사진 또는 스터디 대표 이미지를 첨부해 타이틀 화면에 반영할 수 있습니다.</p>
-        </div>
-        <div class="hero-controls">
-          <label for="heroImageInput">사진 선택</label>
-          <input id="heroImageInput" type="file" accept="image/*" />
-          <button type="button" id="clearHeroImage">이미지 초기화</button>
-          <span class="hero-file-name" id="heroFileName">기본 배경 사용 중</span>
-        </div>
-      </aside>
+  <header class="container hero">
+    <button type="button" class="page-title" id="pageTitle">Lab Seminar Archive</button>
+    <div>
+      <a class="lab-link" href="https://ailab.kookmin.ac.kr/" target="_blank" rel="noreferrer noopener">KMU AI LAB</a>
     </div>
   </header>
 
-  <main class="container page-main">
-    <section class="category-nav" aria-labelledby="cat-nav-title">
-      <h2 class="section-heading" id="cat-nav-title">Step 1 · 카테고리 입장</h2>
-      <div class="category-grid" role="tablist" aria-label="세미나 카테고리 선택">
-        <article class="category-card category-paper" data-cat-card="paper">
+  <main class="container main">
+    <section>
+      <h2 class="section-title">Category</h2>
+      <div class="category-list">
+        <a class="category-link" href="category.html?cat=paper">
           <h3 class="category-name">논문 세미나</h3>
-          <p class="category-desc">CV/AI 주요 논문 리뷰, 재현 실험 결과, 참고 링크를 아카이브합니다.</p>
-          <button class="category-enter" data-enter-cat="paper" role="tab" aria-controls="panel-paper">이 카테고리로 입장</button>
-        </article>
+          <p class="category-desc">논문 발표 자료와 요약 노트를 모아두는 공간입니다. 클릭하면 별도 페이지로 이동합니다.</p>
+        </a>
 
-        <article class="category-card category-vibe" data-cat-card="vibe">
+        <a class="category-link" href="category.html?cat=vibe">
           <h3 class="category-name">바이브코딩</h3>
-          <p class="category-desc">실습 중심 코드 세션, 파이프라인 구성, 개발 로그를 관리합니다.</p>
-          <button class="category-enter" data-enter-cat="vibe" role="tab" aria-controls="panel-vibe">이 카테고리로 입장</button>
-        </article>
+          <p class="category-desc">실습 중심 코드 발표와 구현 데모 자료를 업로드하고 관리하는 공간입니다.</p>
+        </a>
 
-        <article class="category-card category-math" data-cat-card="math">
+        <a class="category-link" href="category.html?cat=math">
           <h3 class="category-name">수학스터디</h3>
-          <p class="category-desc">핵심 수식 유도, 확률/최적화 정리, 보조 노트 자료를 모읍니다.</p>
-          <button class="category-enter" data-enter-cat="math" role="tab" aria-controls="panel-math">이 카테고리로 입장</button>
-        </article>
+          <p class="category-desc">수식 유도와 개념 정리 자료를 정리하는 공간입니다.</p>
+        </a>
       </div>
     </section>
 
-    <div class="active-status" id="activeStatus">
-      현재 선택된 카테고리가 없습니다. <strong>위 카드를 눌러 카테고리에 입장</strong>하면 해당 공간에서 업로드할 수 있습니다.
-    </div>
-
-    <section class="category-panels" aria-live="polite">
-      <article class="category-panel" id="panel-paper" data-panel-cat="paper">
-        <header class="panel-header">
-          <div>
-            <h3 class="panel-title">논문 세미나 Archive</h3>
-            <p class="panel-subtitle">Step 2 · 이 카테고리 안에서만 업로드 가능합니다.</p>
-          </div>
-          <span class="panel-tag tag-paper">논문 세미나</span>
-        </header>
-
-        <form class="upload-box" data-upload-form="paper">
-          <h3>자료 업로드</h3>
-          <div class="upload-grid">
-            <div class="field">
-              <label for="date-paper">날짜 (년-월-일)</label>
-              <input id="date-paper" name="date" type="date" required />
-            </div>
-            <div class="field">
-              <label for="presenter-paper">발표자</label>
-              <input id="presenter-paper" name="presenter" type="text" placeholder="예: 홍길동" required />
-            </div>
-            <div class="field field-full">
-              <label for="title-paper">제목</label>
-              <input id="title-paper" name="title" type="text" placeholder="세션 제목" required />
-            </div>
-            <div class="field field-full">
-              <label for="file-paper">파일 (PDF, PPT, PPTX)</label>
-              <input id="file-paper" name="file" type="file" accept=".pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation" required />
-              <p class="upload-hint">현재 카테고리: 논문 세미나</p>
-            </div>
-          </div>
-          <div class="upload-actions">
-            <button type="submit">업로드 저장</button>
-            <span class="save-msg" data-save-msg="paper"></span>
-          </div>
-        </form>
-
-        <div class="entry-list" data-entry-list="paper"></div>
-      </article>
-
-      <article class="category-panel" id="panel-vibe" data-panel-cat="vibe">
-        <header class="panel-header">
-          <div>
-            <h3 class="panel-title">바이브코딩 Archive</h3>
-            <p class="panel-subtitle">Step 2 · 이 카테고리 안에서만 업로드 가능합니다.</p>
-          </div>
-          <span class="panel-tag tag-vibe">바이브코딩</span>
-        </header>
-
-        <form class="upload-box" data-upload-form="vibe">
-          <h3>자료 업로드</h3>
-          <div class="upload-grid">
-            <div class="field">
-              <label for="date-vibe">날짜 (년-월-일)</label>
-              <input id="date-vibe" name="date" type="date" required />
-            </div>
-            <div class="field">
-              <label for="presenter-vibe">발표자</label>
-              <input id="presenter-vibe" name="presenter" type="text" placeholder="예: 홍길동" required />
-            </div>
-            <div class="field field-full">
-              <label for="title-vibe">제목</label>
-              <input id="title-vibe" name="title" type="text" placeholder="세션 제목" required />
-            </div>
-            <div class="field field-full">
-              <label for="file-vibe">파일 (PDF, PPT, PPTX)</label>
-              <input id="file-vibe" name="file" type="file" accept=".pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation" required />
-              <p class="upload-hint">현재 카테고리: 바이브코딩</p>
-            </div>
-          </div>
-          <div class="upload-actions">
-            <button type="submit">업로드 저장</button>
-            <span class="save-msg" data-save-msg="vibe"></span>
-          </div>
-        </form>
-
-        <div class="entry-list" data-entry-list="vibe"></div>
-      </article>
-
-      <article class="category-panel" id="panel-math" data-panel-cat="math">
-        <header class="panel-header">
-          <div>
-            <h3 class="panel-title">수학스터디 Archive</h3>
-            <p class="panel-subtitle">Step 2 · 이 카테고리 안에서만 업로드 가능합니다.</p>
-          </div>
-          <span class="panel-tag tag-math">수학스터디</span>
-        </header>
-
-        <form class="upload-box" data-upload-form="math">
-          <h3>자료 업로드</h3>
-          <div class="upload-grid">
-            <div class="field">
-              <label for="date-math">날짜 (년-월-일)</label>
-              <input id="date-math" name="date" type="date" required />
-            </div>
-            <div class="field">
-              <label for="presenter-math">발표자</label>
-              <input id="presenter-math" name="presenter" type="text" placeholder="예: 홍길동" required />
-            </div>
-            <div class="field field-full">
-              <label for="title-math">제목</label>
-              <input id="title-math" name="title" type="text" placeholder="세션 제목" required />
-            </div>
-            <div class="field field-full">
-              <label for="file-math">파일 (PDF, PPT, PPTX)</label>
-              <input id="file-math" name="file" type="file" accept=".pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation" required />
-              <p class="upload-hint">현재 카테고리: 수학스터디</p>
-            </div>
-          </div>
-          <div class="upload-actions">
-            <button type="submit">업로드 저장</button>
-            <span class="save-msg" data-save-msg="math"></span>
-          </div>
-        </form>
-
-        <div class="entry-list" data-entry-list="math"></div>
-      </article>
+    <section>
+      <h2 class="section-title">Preview</h2>
+      <div class="preview-board" id="previewBoard"></div>
     </section>
   </main>
 
   <footer>
-    &copy; 2026 KMU AI Lab Seminar Archive · GitHub Pages
+    &copy; 2026 KMU AI Lab Seminar Archive
   </footer>
 
   <script>
     const DB_NAME = 'lab-seminar-archive-db';
     const DB_VERSION = 1;
     const UPLOAD_STORE = 'uploads';
-    const SETTINGS_STORE = 'settings';
 
     const CATEGORY_META = {
-      paper: {
-        label: '논문 세미나',
-        cardClass: 'category-paper',
-        tagClass: 'tag-paper'
-      },
-      vibe: {
-        label: '바이브코딩',
-        cardClass: 'category-vibe',
-        tagClass: 'tag-vibe'
-      },
-      math: {
-        label: '수학스터디',
-        cardClass: 'category-math',
-        tagClass: 'tag-math'
-      }
+      paper: { label: '논문 세미나', link: 'category.html?cat=paper' },
+      vibe: { label: '바이브코딩', link: 'category.html?cat=vibe' },
+      math: { label: '수학스터디', link: 'category.html?cat=math' }
     };
 
     const STATIC_ENTRIES = [
@@ -803,418 +300,127 @@
         date: '2026-03-20',
         presenter: '이정익',
         title: 'GroupViT: Semantic Segmentation Emerges from Text Supervision',
-        fileName: '2026-03-20-groupvit.html',
-        staticLink: '2026-03-20-groupvit.html',
-        kind: 'seed'
+        description: '텍스트 감독만으로 시맨틱 분할 성능을 확보하는 GroupViT 핵심 아이디어를 정리한 발표.',
+        kind: 'seed',
+        createdAt: '2026-03-20T09:00:00.000Z'
       }
     ];
 
-    let activeCategory = '';
-    let uploadedEntries = [];
-    let dbPromise;
-    let heroObjectUrl = '';
-
-    const heroPanel = document.getElementById('heroPanel');
-    const heroImageInput = document.getElementById('heroImageInput');
-    const clearHeroImageButton = document.getElementById('clearHeroImage');
-    const heroFileName = document.getElementById('heroFileName');
-    const activeStatus = document.getElementById('activeStatus');
+    const previewBoard = document.getElementById('previewBoard');
 
     function openDatabase() {
-      if (dbPromise) {
-        return dbPromise;
-      }
-
-      dbPromise = new Promise((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, DB_VERSION);
 
         request.onupgradeneeded = (event) => {
           const db = event.target.result;
-
           if (!db.objectStoreNames.contains(UPLOAD_STORE)) {
             const uploadStore = db.createObjectStore(UPLOAD_STORE, { keyPath: 'id' });
             uploadStore.createIndex('category', 'category', { unique: false });
             uploadStore.createIndex('date', 'date', { unique: false });
-          }
-
-          if (!db.objectStoreNames.contains(SETTINGS_STORE)) {
-            db.createObjectStore(SETTINGS_STORE, { keyPath: 'key' });
           }
         };
 
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
       });
-
-      return dbPromise;
     }
 
-    async function withStore(storeName, mode, handler) {
-      const db = await openDatabase();
-
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(storeName, mode);
-        const store = tx.objectStore(storeName);
-
-        let result;
-        try {
-          result = handler(store);
-        } catch (error) {
-          reject(error);
-          return;
-        }
-
-        tx.oncomplete = () => resolve(result);
-        tx.onerror = () => reject(tx.error);
-        tx.onabort = () => reject(tx.error);
-      });
-    }
-
-    async function saveUploadEntry(entry) {
-      await withStore(UPLOAD_STORE, 'readwrite', (store) => store.put(entry));
-    }
-
-    async function removeUploadEntry(id) {
-      await withStore(UPLOAD_STORE, 'readwrite', (store) => store.delete(id));
-    }
-
-    async function loadUploadEntries() {
-      const db = await openDatabase();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(UPLOAD_STORE, 'readonly');
-        const store = tx.objectStore(UPLOAD_STORE);
-        const request = store.getAll();
-
-        request.onsuccess = () => resolve(request.result || []);
-        request.onerror = () => reject(request.error);
-      });
-    }
-
-    async function saveSetting(key, value) {
-      await withStore(SETTINGS_STORE, 'readwrite', (store) => store.put({ key, value }));
-    }
-
-    async function loadSetting(key) {
-      const db = await openDatabase();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction(SETTINGS_STORE, 'readonly');
-        const store = tx.objectStore(SETTINGS_STORE);
-        const request = store.get(key);
-
-        request.onsuccess = () => resolve(request.result ? request.result.value : null);
-        request.onerror = () => reject(request.error);
-      });
-    }
-
-    function toPrettyDate(dateString) {
-      if (!dateString) {
-        return '-';
+    async function loadUploads() {
+      try {
+        const db = await openDatabase();
+        return await new Promise((resolve, reject) => {
+          const tx = db.transaction(UPLOAD_STORE, 'readonly');
+          const store = tx.objectStore(UPLOAD_STORE);
+          const request = store.getAll();
+          request.onsuccess = () => resolve(request.result || []);
+          request.onerror = () => reject(request.error);
+        });
+      } catch (error) {
+        console.error(error);
+        return [];
       }
-
-      const [year, month, day] = dateString.split('-');
-      if (!year || !month || !day) {
-        return dateString;
-      }
-
-      return `${year}.${month}.${day}`;
     }
 
-    function getCategoryEntries(category) {
-      const merged = [...STATIC_ENTRIES, ...uploadedEntries].filter((entry) => entry.category === category);
+    function mergeEntriesByCategory(entries, category) {
+      const merged = [...STATIC_ENTRIES, ...entries]
+        .filter((entry) => entry.category === category)
+        .map((entry) => ({
+          ...entry,
+          description: entry.description || '설명이 없습니다.'
+        }));
+
       merged.sort((a, b) => {
-        const aDate = a.date || '';
-        const bDate = b.date || '';
-        if (aDate !== bDate) {
-          return bDate.localeCompare(aDate);
+        const dateCompare = String(b.date || '').localeCompare(String(a.date || ''));
+        if (dateCompare !== 0) {
+          return dateCompare;
         }
-
-        const aCreated = a.createdAt || '';
-        const bCreated = b.createdAt || '';
-        return bCreated.localeCompare(aCreated);
+        return String(b.createdAt || '').localeCompare(String(a.createdAt || ''));
       });
+
       return merged;
     }
 
-    function createEntryCard(entry) {
-      const wrapper = document.createElement('article');
-      wrapper.className = 'entry-card';
-
-      const head = document.createElement('div');
-      head.className = 'entry-head';
-
-      const date = document.createElement('span');
-      date.className = 'entry-date';
-      date.textContent = toPrettyDate(entry.date);
-
-      const tag = document.createElement('span');
-      tag.className = `panel-tag ${CATEGORY_META[entry.category].tagClass}`;
-      tag.textContent = CATEGORY_META[entry.category].label;
-
-      head.append(date, tag);
-
-      const title = document.createElement('h4');
-      title.className = 'entry-title';
-      title.textContent = entry.title;
-
-      const presenter = document.createElement('p');
-      presenter.className = 'entry-presenter';
-      presenter.textContent = `발표자: ${entry.presenter}`;
-
-      const file = document.createElement('p');
-      file.className = 'entry-file';
-      file.textContent = `파일: ${entry.fileName}`;
-
-      const actions = document.createElement('div');
-      actions.className = 'entry-actions';
-
-      if (entry.kind === 'seed' && entry.staticLink) {
-        const link = document.createElement('a');
-        link.href = entry.staticLink;
-        link.target = '_blank';
-        link.rel = 'noreferrer noopener';
-        link.textContent = '세션 보기';
-        link.className = 'open-btn';
-        actions.appendChild(link);
-      }
-
-      if (entry.kind === 'upload' && entry.fileBlob) {
-        const openButton = document.createElement('button');
-        openButton.type = 'button';
-        openButton.className = 'open-btn';
-        openButton.textContent = '파일 열기';
-        openButton.addEventListener('click', () => {
-          const url = URL.createObjectURL(entry.fileBlob);
-          window.open(url, '_blank', 'noopener,noreferrer');
-          setTimeout(() => URL.revokeObjectURL(url), 8000);
-        });
-        actions.appendChild(openButton);
-
-        const downloadLink = document.createElement('a');
-        downloadLink.href = '#';
-        downloadLink.textContent = '다운로드';
-        downloadLink.addEventListener('click', (event) => {
-          event.preventDefault();
-          const url = URL.createObjectURL(entry.fileBlob);
-          const tempLink = document.createElement('a');
-          tempLink.href = url;
-          tempLink.download = entry.fileName;
-          document.body.appendChild(tempLink);
-          tempLink.click();
-          tempLink.remove();
-          setTimeout(() => URL.revokeObjectURL(url), 8000);
-        });
-        actions.appendChild(downloadLink);
-
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.className = 'delete-btn';
-        deleteButton.textContent = '삭제';
-        deleteButton.addEventListener('click', async () => {
-          const ok = window.confirm('이 업로드 항목을 삭제할까요?');
-          if (!ok) {
-            return;
-          }
-          await removeUploadEntry(entry.id);
-          uploadedEntries = uploadedEntries.filter((item) => item.id !== entry.id);
-          renderEntries();
-        });
-        actions.appendChild(deleteButton);
-      }
-
-      wrapper.append(head, title, presenter, file, actions);
-      return wrapper;
+    function previewCard(entry) {
+      return `
+        <article class="preview-card">
+          <div class="preview-meta">${entry.date || '-'} · ${entry.presenter || '-'}</div>
+          <h4 class="preview-title">${escapeHtml(entry.title || '(제목 없음)')}</h4>
+          <p class="preview-desc">${escapeHtml(entry.description || '')}</p>
+        </article>
+      `;
     }
 
-    function renderEntries() {
-      Object.keys(CATEGORY_META).forEach((category) => {
-        const listNode = document.querySelector(`[data-entry-list="${category}"]`);
-        listNode.innerHTML = '';
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
 
-        const entries = getCategoryEntries(category);
+    async function renderPreviewBoard() {
+      const uploads = await loadUploads();
+      previewBoard.innerHTML = '';
+
+      Object.keys(CATEGORY_META).forEach((categoryKey) => {
+        const category = CATEGORY_META[categoryKey];
+        const entries = mergeEntriesByCategory(uploads, categoryKey).slice(0, 3);
+
+        const wrapper = document.createElement('section');
+        wrapper.className = 'preview-group';
+
+        const title = document.createElement('h3');
+        title.textContent = category.label;
+
+        const list = document.createElement('div');
+        list.className = 'preview-list';
+
         if (entries.length === 0) {
           const empty = document.createElement('p');
-          empty.className = 'empty-list';
-          empty.textContent = '아직 등록된 자료가 없습니다. 이 카테고리에서 첫 업로드를 진행하세요.';
-          listNode.appendChild(empty);
-          return;
+          empty.className = 'preview-empty';
+          empty.textContent = '아직 업로드된 항목이 없습니다.';
+          list.appendChild(empty);
+        } else {
+          list.innerHTML = entries.map(previewCard).join('');
         }
 
-        entries.forEach((entry) => listNode.appendChild(createEntryCard(entry)));
+        const moreLink = document.createElement('a');
+        moreLink.className = 'preview-more';
+        moreLink.href = category.link;
+        moreLink.textContent = '카테고리 페이지로 이동';
+
+        wrapper.append(title, list, moreLink);
+        previewBoard.appendChild(wrapper);
       });
     }
 
-    function setActiveCategory(category) {
-      if (!CATEGORY_META[category]) {
-        return;
-      }
+    document.getElementById('pageTitle').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
-      activeCategory = category;
-
-      document.querySelectorAll('[data-cat-card]').forEach((node) => {
-        node.classList.toggle('is-active', node.dataset.catCard === category);
-      });
-
-      document.querySelectorAll('[data-panel-cat]').forEach((node) => {
-        const isTarget = node.dataset.panelCat === category;
-        node.classList.toggle('is-active', isTarget);
-        node.setAttribute('aria-hidden', isTarget ? 'false' : 'true');
-      });
-
-      activeStatus.innerHTML = `현재 카테고리: <strong>${CATEGORY_META[category].label}</strong> · 이 영역 안에서 파일을 업로드할 수 있습니다.`;
-
-      const targetPanel = document.querySelector(`[data-panel-cat="${category}"]`);
-      if (targetPanel) {
-        targetPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
-
-    function isAllowedFile(fileName) {
-      const lower = fileName.toLowerCase();
-      return lower.endsWith('.pdf') || lower.endsWith('.ppt') || lower.endsWith('.pptx');
-    }
-
-    function hookCategoryButtons() {
-      document.querySelectorAll('[data-enter-cat]').forEach((button) => {
-        button.addEventListener('click', () => {
-          setActiveCategory(button.dataset.enterCat);
-        });
-      });
-    }
-
-    function setSaveMessage(category, text, isError = false) {
-      const node = document.querySelector(`[data-save-msg="${category}"]`);
-      node.textContent = text;
-      node.style.color = isError ? '#8a2d2d' : '#5f5a52';
-    }
-
-    function hookUploadForms() {
-      document.querySelectorAll('[data-upload-form]').forEach((form) => {
-        form.addEventListener('submit', async (event) => {
-          event.preventDefault();
-
-          const category = form.dataset.uploadForm;
-          if (activeCategory !== category) {
-            setSaveMessage(category, '먼저 이 카테고리에 입장한 뒤 업로드해 주세요.', true);
-            return;
-          }
-
-          const formData = new FormData(form);
-          const date = String(formData.get('date') || '').trim();
-          const presenter = String(formData.get('presenter') || '').trim();
-          const title = String(formData.get('title') || '').trim();
-          const file = formData.get('file');
-
-          if (!date || !presenter || !title || !(file instanceof File) || !file.name) {
-            setSaveMessage(category, '필수 항목을 모두 입력해 주세요.', true);
-            return;
-          }
-
-          if (!isAllowedFile(file.name)) {
-            setSaveMessage(category, 'PDF, PPT, PPTX 형식만 업로드할 수 있습니다.', true);
-            return;
-          }
-
-          const entry = {
-            id: crypto.randomUUID(),
-            kind: 'upload',
-            category,
-            date,
-            presenter,
-            title,
-            fileName: file.name,
-            fileBlob: file,
-            createdAt: new Date().toISOString()
-          };
-
-          try {
-            await saveUploadEntry(entry);
-            uploadedEntries.unshift(entry);
-            renderEntries();
-            setSaveMessage(category, '저장되었습니다. 같은 브라우저에서 계속 확인할 수 있습니다.');
-            form.reset();
-          } catch (error) {
-            console.error(error);
-            setSaveMessage(category, '저장에 실패했습니다. 브라우저 저장소 상태를 확인해 주세요.', true);
-          }
-        });
-      });
-    }
-
-    function applyHeroImage(imageRecord) {
-      if (heroObjectUrl) {
-        URL.revokeObjectURL(heroObjectUrl);
-        heroObjectUrl = '';
-      }
-
-      if (!imageRecord || !imageRecord.blob) {
-        heroPanel.style.backgroundImage = '';
-        heroFileName.textContent = '기본 배경 사용 중';
-        return;
-      }
-
-      heroObjectUrl = URL.createObjectURL(imageRecord.blob);
-      heroPanel.style.backgroundImage = `linear-gradient(140deg, rgba(24, 79, 111, 0.36), rgba(122, 59, 30, 0.36)), url(${heroObjectUrl})`;
-      heroPanel.style.backgroundSize = 'cover';
-      heroPanel.style.backgroundPosition = 'center';
-      heroFileName.textContent = imageRecord.name || '사용자 지정 이미지 적용됨';
-    }
-
-    function hookHeroControls() {
-      heroImageInput.addEventListener('change', async () => {
-        const file = heroImageInput.files && heroImageInput.files[0];
-        if (!file) {
-          return;
-        }
-
-        try {
-          await saveSetting('heroImage', {
-            name: file.name,
-            blob: file,
-            updatedAt: new Date().toISOString()
-          });
-          applyHeroImage({ name: file.name, blob: file });
-        } catch (error) {
-          console.error(error);
-          alert('타이틀 이미지 저장에 실패했습니다.');
-        } finally {
-          heroImageInput.value = '';
-        }
-      });
-
-      clearHeroImageButton.addEventListener('click', async () => {
-        try {
-          await saveSetting('heroImage', null);
-          applyHeroImage(null);
-        } catch (error) {
-          console.error(error);
-          alert('타이틀 이미지 초기화에 실패했습니다.');
-        }
-      });
-    }
-
-    async function initialize() {
-      hookCategoryButtons();
-      hookUploadForms();
-      hookHeroControls();
-
-      try {
-        uploadedEntries = await loadUploadEntries();
-      } catch (error) {
-        console.error(error);
-        uploadedEntries = [];
-      }
-
-      renderEntries();
-
-      try {
-        const heroImage = await loadSetting('heroImage');
-        applyHeroImage(heroImage);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    initialize();
+    renderPreviewBoard();
   </script>
 </body>
 </html>
