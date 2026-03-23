@@ -6,16 +6,22 @@
   <title>Lab Seminar Archive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Gowun+Dodum&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --blue: #2563eb;
-      --blue-soft: #eff5ff;
-      --blue-line: #c7d8ff;
-      --ink: #19202c;
-      --muted: #61708a;
-      --white: #ffffff;
-      --radius: 18px;
+      --color-primary: #6A7C9C;
+      --color-dark: #151D2A;
+      --color-text: #000000;
+      --color-text-secondary: #757575;
+      --color-bg: #FFFFFF;
+      --color-bg-secondary: #F7F7F7;
+      --color-accent: #116dff;
+      --color-border: #C7C7C7;
+
+      --site-width: 980px;
+      --border-radius: 5px;
+      --shadow: 0 1px 4px rgba(0,0,0,.6);
+      --transition: 0.4s ease;
     }
 
     * {
@@ -28,164 +34,175 @@
     body {
       width: 100%;
       min-height: 100%;
-      background: var(--white);
-      color: var(--ink);
-      font-family: 'Gowun Dodum', sans-serif;
-      scroll-behavior: smooth;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+      font-size: 16px;
+      line-height: 1.4em;
     }
 
-    .top-ribbon {
+    .header {
       width: 100%;
-      height: 84px;
-      background: linear-gradient(90deg, #1f4fd0, #2f7dff);
+      background: var(--color-bg);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    .container {
-      width: min(980px, calc(100% - 2rem));
+    .header-inner {
+      max-width: var(--site-width);
       margin: 0 auto;
+      padding: 1.2rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
     }
 
-    .hero {
-      margin-top: -42px;
-      text-align: center;
-      padding-bottom: 1.1rem;
-    }
-
-    .page-title {
-      font-family: 'Gaegu', cursive;
-      font-size: clamp(2.2rem, 5.2vw, 3.5rem);
+    .site-title {
+      font-size: 1.5rem;
       font-weight: 700;
-      background: #fff;
-      border: 2px solid #d4e2ff;
-      border-radius: 999px;
-      padding: 0.62rem 1.65rem;
-      color: #17306e;
-      cursor: pointer;
-      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.14);
+      color: var(--color-dark);
+      margin: 0;
     }
 
     .lab-link {
       display: inline-flex;
-      justify-content: center;
       align-items: center;
-      margin-top: 1rem;
       text-decoration: none;
-      background: var(--blue);
-      color: #fff;
-      border-radius: 12px;
-      padding: 0.72rem 2rem;
-      font-size: 1.08rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
-      transition: transform 0.16s ease, opacity 0.16s ease;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: var(--border-radius);
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background-color var(--transition);
     }
 
     .lab-link:hover {
-      transform: translateY(-2px);
-      opacity: 0.95;
+      background: var(--color-dark);
+    }
+
+    .container {
+      max-width: var(--site-width);
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 3rem 0 2rem;
+    }
+
+    .page-title {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-desc {
+      font-size: 1.125rem;
+      color: var(--color-text-secondary);
+      line-height: 1.6;
     }
 
     .main {
-      padding: 1.2rem 0 4rem;
-      display: grid;
-      gap: 2.1rem;
+      padding: 2rem 0 4rem;
+    }
+
+    .section {
+      margin-bottom: 3rem;
     }
 
     .section-title {
-      font-family: 'Gaegu', cursive;
-      font-size: clamp(1.6rem, 3.2vw, 2.3rem);
-      margin-bottom: 0.9rem;
-      color: #1e3a8a;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--color-border);
     }
 
     .category-list {
       display: grid;
-      gap: 0.9rem;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
     .category-link {
       text-decoration: none;
-      border: 2px solid var(--blue-line);
-      border-radius: var(--radius);
-      background: var(--blue-soft);
-      padding: 1.2rem 1.3rem;
-      transition: transform 0.16s ease, border-color 0.16s ease;
-      display: grid;
-      gap: 0.45rem;
-      min-height: 132px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      background: var(--color-bg);
+      padding: 1.5rem;
+      transition: all var(--transition);
+      display: block;
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
     }
 
     .category-link:hover {
       transform: translateY(-2px);
-      border-color: #6d95f8;
+      box-shadow: var(--shadow);
+      border-color: var(--color-primary);
     }
 
     .category-name {
-      font-family: 'Gaegu', cursive;
-      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-size: 1.375rem;
       font-weight: 700;
-      color: #1945b4;
-      line-height: 1;
+      color: var(--color-dark);
+      margin-bottom: 0.75rem;
     }
 
     .category-desc {
-      color: var(--muted);
-      font-size: 0.98rem;
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
       line-height: 1.5;
-      max-width: 70ch;
-    }
-
-    .preview-board {
-      border: 1px solid #d9e5ff;
-      border-radius: var(--radius);
-      background: #fafcff;
-      padding: 1rem;
-      display: grid;
-      gap: 1.2rem;
-    }
-
-    .preview-group {
-      display: grid;
-      gap: 0.62rem;
-    }
-
-    .preview-group h3 {
-      font-family: 'Gaegu', cursive;
-      font-size: 1.9rem;
-      color: #1f4fb6;
-      line-height: 1;
     }
 
     .preview-list {
       display: grid;
-      gap: 0.58rem;
+      gap: 1rem;
+    }
+
+    .preview-group {
+      margin-bottom: 2rem;
+    }
+
+    .preview-group h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
     }
 
     .preview-card {
-      border: 1px solid #d8e2f8;
-      border-radius: 12px;
-      background: #fff;
-      padding: 0.72rem 0.84rem;
-      display: grid;
-      gap: 0.35rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      background: var(--color-bg);
+      padding: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,.1);
     }
 
     .preview-meta {
-      font-size: 0.83rem;
-      color: #6c7a94;
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+      margin-bottom: 0.5rem;
     }
 
     .preview-title {
-      font-size: 1.04rem;
+      font-size: 1.1rem;
       font-weight: 700;
       line-height: 1.35;
-      color: #1d2a43;
+      color: var(--color-dark);
+      margin-bottom: 0.5rem;
     }
 
     .preview-desc {
-      font-size: 0.92rem;
-      color: #3f4f67;
-      line-height: 1.42;
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -193,71 +210,74 @@
     }
 
     .preview-empty {
-      border: 1px dashed #cfdcf8;
-      border-radius: 10px;
-      background: #fff;
-      padding: 0.72rem 0.84rem;
-      color: #6e7c96;
+      border: 1px dashed var(--color-border);
+      border-radius: var(--border-radius);
+      background: var(--color-bg-secondary);
+      padding: 1.25rem;
+      color: var(--color-text-secondary);
       font-size: 0.9rem;
+      text-align: center;
     }
 
     .preview-more {
-      width: fit-content;
+      display: inline-block;
+      margin-top: 1rem;
       text-decoration: none;
-      font-size: 0.86rem;
-      color: #1f4fb6;
-      border: 1px solid #a8c0ff;
-      border-radius: 999px;
-      padding: 0.3rem 0.8rem;
-      background: #f4f8ff;
+      font-size: 0.9rem;
+      color: var(--color-accent);
+      font-weight: 500;
+      transition: color var(--transition);
+    }
+
+    .preview-more:hover {
+      color: var(--color-primary);
     }
 
     footer {
-      border-top: 1px solid #dce7ff;
+      border-top: 1px solid var(--color-border);
       text-align: center;
-      color: #70809b;
-      font-size: 0.82rem;
-      padding: 1rem 0 1.35rem;
-      font-family: 'Gowun Dodum', sans-serif;
+      color: var(--color-text-secondary);
+      font-size: 0.85rem;
+      padding: 2rem 1rem;
+      background: var(--color-bg-secondary);
     }
 
     @media (max-width: 640px) {
-      .container {
-        width: min(980px, calc(100% - 1.1rem));
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       .page-title {
-        padding: 0.58rem 1.1rem;
+        font-size: 1.75rem;
       }
 
-      .category-link {
-        min-height: 118px;
-      }
-
-      .preview-group h3 {
-        font-size: 1.7rem;
+      .category-list {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
-  <div id="pageTop"></div>
-  <div class="top-ribbon"></div>
-
-  <header class="container hero">
-    <button type="button" class="page-title" id="pageTitle">Lab Seminar Archive</button>
-    <div>
+  <header class="header">
+    <div class="header-inner">
+      <h1 class="site-title">Lab Seminar Archive</h1>
       <a class="lab-link" href="https://ailab.kookmin.ac.kr/" target="_blank" rel="noreferrer noopener">KMU AI LAB</a>
     </div>
   </header>
 
+  <div class="hero container">
+    <h2 class="page-title">연구실 세미나 자료</h2>
+    <p class="page-desc">논문 발표, 바이브코딩, 수학스터디 자료를 정리한 아카이브입니다.</p>
+  </div>
+
   <main class="container main">
-    <section>
-      <h2 class="section-title">Category</h2>
+    <section class="section">
+      <h2 class="section-title">카테고리</h2>
       <div class="category-list">
         <a class="category-link" href="category.html?cat=paper">
           <h3 class="category-name">논문 세미나</h3>
-          <p class="category-desc">논문 발표 자료와 요약 노트를 모아두는 공간입니다. 클릭하면 별도 페이지로 이동합니다.</p>
+          <p class="category-desc">논문 발표 자료와 요약 노트를 모아두는 공간입니다.</p>
         </a>
 
         <a class="category-link" href="category.html?cat=vibe">
@@ -272,21 +292,17 @@
       </div>
     </section>
 
-    <section>
-      <h2 class="section-title">Preview</h2>
-      <div class="preview-board" id="previewBoard"></div>
+    <section class="section">
+      <h2 class="section-title">최근 업로드</h2>
+      <div id="previewBoard"></div>
     </section>
   </main>
 
   <footer>
-    &copy; 2026 KMU AI Lab Seminar Archive
+    &copy; 2026 KMU AI Lab. All rights reserved.
   </footer>
 
   <script>
-    const DB_NAME = 'lab-seminar-archive-db';
-    const DB_VERSION = 1;
-    const UPLOAD_STORE = 'uploads';
-
     const CATEGORY_META = {
       paper: { label: '논문 세미나', link: 'category.html?cat=paper' },
       vibe: { label: '바이브코딩', link: 'category.html?cat=vibe' },
@@ -307,40 +323,6 @@
     ];
 
     const previewBoard = document.getElementById('previewBoard');
-
-    function openDatabase() {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-
-        request.onupgradeneeded = (event) => {
-          const db = event.target.result;
-          if (!db.objectStoreNames.contains(UPLOAD_STORE)) {
-            const uploadStore = db.createObjectStore(UPLOAD_STORE, { keyPath: 'id' });
-            uploadStore.createIndex('category', 'category', { unique: false });
-            uploadStore.createIndex('date', 'date', { unique: false });
-          }
-        };
-
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      });
-    }
-
-    async function loadUploads() {
-      try {
-        const db = await openDatabase();
-        return await new Promise((resolve, reject) => {
-          const tx = db.transaction(UPLOAD_STORE, 'readonly');
-          const store = tx.objectStore(UPLOAD_STORE);
-          const request = store.getAll();
-          request.onsuccess = () => resolve(request.result || []);
-          request.onerror = () => reject(request.error);
-        });
-      } catch (error) {
-        console.error(error);
-        return [];
-      }
-    }
 
     function mergeEntriesByCategory(entries, category) {
       const merged = [...STATIC_ENTRIES, ...entries]
@@ -380,13 +362,13 @@
         .replaceAll("'", '&#39;');
     }
 
-    async function renderPreviewBoard() {
-      const uploads = await loadUploads();
+    function renderPreviewBoard() {
+      const entries = [];
       previewBoard.innerHTML = '';
 
       Object.keys(CATEGORY_META).forEach((categoryKey) => {
         const category = CATEGORY_META[categoryKey];
-        const entries = mergeEntriesByCategory(uploads, categoryKey).slice(0, 3);
+        const categoryEntries = mergeEntriesByCategory(entries, categoryKey).slice(0, 3);
 
         const wrapper = document.createElement('section');
         wrapper.className = 'preview-group';
@@ -397,28 +379,24 @@
         const list = document.createElement('div');
         list.className = 'preview-list';
 
-        if (entries.length === 0) {
+        if (categoryEntries.length === 0) {
           const empty = document.createElement('p');
           empty.className = 'preview-empty';
           empty.textContent = '아직 업로드된 항목이 없습니다.';
           list.appendChild(empty);
         } else {
-          list.innerHTML = entries.map(previewCard).join('');
+          list.innerHTML = categoryEntries.map(previewCard).join('');
         }
 
         const moreLink = document.createElement('a');
         moreLink.className = 'preview-more';
         moreLink.href = category.link;
-        moreLink.textContent = '카테고리 페이지로 이동';
+        moreLink.textContent = '더 보기 →';
 
         wrapper.append(title, list, moreLink);
         previewBoard.appendChild(wrapper);
       });
     }
-
-    document.getElementById('pageTitle').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
 
     renderPreviewBoard();
   </script>

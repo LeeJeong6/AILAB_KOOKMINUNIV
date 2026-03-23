@@ -5,226 +5,275 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GroupViT — Lab Seminar Archive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Spectral:ital,wght@0,300;0,400;0,600;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg:       #F7F4EE;
-      --bg-card:  #FDFCF8;
-      --ink:      #1C1814;
-      --ink-mute: #6B6358;
-      --rule:     #D8D0C4;
-      --accent:   #7A3B1E;   /* 논문 세미나 */
-      --accent-bg:#F5E8E1;
+      --color-primary: #6A7C9C;
+      --color-dark: #151D2A;
+      --color-text: #000000;
+      --color-text-secondary: #757575;
+      --color-bg: #FFFFFF;
+      --color-bg-secondary: #F7F7F7;
+      --color-accent: #116dff;
+      --color-border: #C7C7C7;
+      --color-highlight: #F5E8E1;
+
+      --site-width: 980px;
+      --border-radius: 5px;
+      --shadow: 0 1px 4px rgba(0,0,0,.6);
+      --transition: 0.4s ease;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      background: var(--bg);
-      color: var(--ink);
-      font-family: 'EB Garamond', Georgia, serif;
-      font-size: 18px;
-      line-height: 1.7;
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
     }
 
-    /* ── Top bar ── */
-    .top-bar {
-      border-bottom: 1px solid var(--rule);
-      padding: 0.9rem 2rem;
-      display: flex;
-      align-items: center;
-      gap: 1.2rem;
-    }
-    .back-link {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--ink-mute);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: color 0.15s;
-    }
-    .back-link:hover { color: var(--ink); }
-    .breadcrumb-sep { color: var(--rule); font-size: 0.85rem; }
-    .breadcrumb-cur {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--ink-mute);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .header {
+      width: 100%;
+      background: var(--color-bg);
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
-    /* ── Container ── */
-    .container {
-      max-width: 900px;
+    .header-inner {
+      max-width: var(--site-width);
       margin: 0 auto;
-      padding: 0 2rem 5rem;
+      padding: 1.2rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
     }
 
-    /* ── Session header ── */
-    .session-header {
-      padding: 3rem 0 2rem;
-      border-bottom: 1px solid var(--rule);
-      margin-bottom: 2.5rem;
+    .site-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin: 0;
     }
+
+    .lab-link {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      background: var(--color-primary);
+      color: var(--color-bg);
+      border-radius: var(--border-radius);
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background-color var(--transition);
+    }
+
+    .lab-link:hover {
+      background: var(--color-dark);
+    }
+
+    .breadcrumb {
+      max-width: var(--site-width);
+      margin: 0 auto;
+      padding: 1rem 1rem;
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+    }
+
+    .breadcrumb a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    .breadcrumb a:hover {
+      color: var(--color-dark);
+    }
+
+    .container {
+      max-width: var(--site-width);
+      margin: 0 auto;
+      padding: 0 1rem 4rem;
+    }
+
+    .session-header {
+      padding: 2rem 0;
+      border-bottom: 2px solid var(--color-border);
+      margin-bottom: 2rem;
+    }
+
     .session-type-badge {
       display: inline-block;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      padding: 0.22rem 0.7rem;
-      border-radius: 4px;
-      background: var(--accent-bg);
-      color: var(--accent);
-      margin-bottom: 1.2rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--border-radius);
+      background: var(--color-highlight);
+      color: var(--color-dark);
+      margin-bottom: 1rem;
+      font-weight: 500;
     }
+
     .session-title {
-      font-family: 'Spectral', serif;
-      font-weight: 300;
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      line-height: 1.2;
+      font-weight: 700;
+      font-size: 2rem;
+      line-height: 1.3;
       letter-spacing: -0.01em;
-      margin-bottom: 1.4rem;
+      margin-bottom: 1.5rem;
+      color: var(--color-dark);
     }
-    .session-title em { font-style: italic; }
+
+    .session-title em {
+      font-style: italic;
+      color: var(--color-primary);
+    }
+
     .session-meta-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1rem 2rem;
+      gap: 1.5rem;
       margin-top: 1.5rem;
     }
+
     .meta-item { }
+
     .meta-key {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-      margin-bottom: 0.2rem;
-    }
-    .meta-val {
-      font-size: 0.95rem;
-      color: var(--ink);
-    }
-
-    /* ── Abstract / Notes section ── */
-    .section { margin-bottom: 2.5rem; }
-    .section-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 0.4rem;
-      margin-bottom: 1rem;
-    }
-    .section p { margin-bottom: 0.8rem; font-size: 1rem; }
-    .section ul {
-      padding-left: 1.4rem;
-      font-size: 1rem;
-    }
-    .section ul li { margin-bottom: 0.4rem; }
-    .section ul li::marker { color: var(--accent); }
-
-    /* ── PDF Viewer ── */
-    .pdf-wrapper {
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      overflow: hidden;
-      background: #fff;
-    }
-    .pdf-toolbar {
-      background: var(--bg-card);
-      border-bottom: 1px solid var(--rule);
-      padding: 0.6rem 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-    .pdf-toolbar span {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--ink-mute);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
       letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      margin-bottom: 0.3rem;
+      font-weight: 500;
     }
-    .pdf-dl {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--accent);
-      text-decoration: none;
-      border: 1px solid var(--accent);
-      padding: 0.2rem 0.6rem;
-      border-radius: 3px;
-      transition: background 0.15s, color 0.15s;
-    }
-    .pdf-dl:hover { background: var(--accent); color: #fff; }
-    .pdf-embed {
-      width: 100%;
-      height: 680px;
-      display: block;
-      border: none;
-    }
-    .pdf-fallback {
-      padding: 3rem;
-      text-align: center;
-      font-size: 0.95rem;
-      color: var(--ink-mute);
-    }
-    .pdf-fallback a { color: var(--accent); }
 
-    /* ── Keywords ── */
+    .meta-val {
+      font-size: 1rem;
+      color: var(--color-text);
+    }
+
     .keywords {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.5rem;
       margin-top: 0.5rem;
     }
+
     .kw-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.65rem;
-      padding: 0.18rem 0.6rem;
-      border: 1px solid var(--rule);
-      border-radius: 4px;
-      color: var(--ink-mute);
-      letter-spacing: 0.05em;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      color: var(--color-text-secondary);
+      letter-spacing: 0.03em;
+      background: var(--color-bg-secondary);
     }
 
-    /* ── Footer ── */
-    footer {
-      border-top: 1px solid var(--rule);
-      text-align: center;
-      padding: 1.5rem;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.68rem;
-      color: var(--ink-mute);
+    .section {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-label {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 0.75rem;
       letter-spacing: 0.1em;
-      margin-top: 4rem;
+      text-transform: uppercase;
+      color: var(--color-text-secondary);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid var(--color-border);
+      font-weight: 500;
+    }
+
+    .section p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .section ul {
+      padding-left: 1.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .section ul li::marker {
+      color: var(--color-primary);
+    }
+
+    footer {
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+      color: var(--color-text-secondary);
+      font-size: 0.85rem;
+      padding: 2rem 1rem;
+      background: var(--color-bg-secondary);
+    }
+
+    footer a {
+      color: var(--color-primary);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+
+    footer a:hover {
+      color: var(--color-dark);
+    }
+
+    @media (max-width: 640px) {
+      .header-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .session-title {
+        font-size: 1.5rem;
+      }
+
+      .session-meta-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- Top navigation bar -->
-<div class="top-bar">
-  <a class="back-link" href="index.html">← Archive</a>
-  <span class="breadcrumb-sep">/</span>
-  <span class="breadcrumb-cur">GroupViT · 2026-03-20</span>
+<header class="header">
+  <div class="header-inner">
+    <h1 class="site-title">Lab Seminar Archive</h1>
+    <a class="lab-link" href="https://ailab.kookmin.ac.kr/" target="_blank" rel="noreferrer noopener">KMU AI LAB</a>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">← Archive</a> / <a href="category.html?cat=paper">논문 세미나</a> / GroupViT
 </div>
 
 <div class="container">
 
-  <!-- ── Session header ── -->
   <div class="session-header">
     <div class="session-type-badge">논문 세미나</div>
-    <h1 class="session-title">
-      GroupViT: Semantic Segmentation Emerges<br>from <em>Text Supervision</em>
-    </h1>
+    <h2 class="session-title">
+      GroupViT: Semantic Segmentation Emerges from <em>Text Supervision</em>
+    </h2>
     <div class="session-meta-grid">
       <div class="meta-item">
         <div class="meta-key">Date</div>
@@ -256,13 +305,11 @@
     </div>
   </div>
 
-  <!-- ── Abstract ── -->
   <div class="section">
     <div class="section-label">Abstract (요약)</div>
     <p>GroupViT은 텍스트 supervision만으로 pixel-level semantic segmentation을 학습하는 hierarchical grouping ViT 모델이다. 이미지를 점진적으로 의미 있는 그룹으로 병합하는 grouping block을 도입하여, 별도의 dense annotation 없이 zero-shot segmentation을 달성한다.</p>
   </div>
 
-  <!-- ── Key Points ── -->
   <div class="section">
     <div class="section-label">핵심 포인트</div>
     <ul>
@@ -273,42 +320,17 @@
     </ul>
   </div>
 
-  <!-- ── Discussion Notes ── -->
   <div class="section">
     <div class="section-label">토의 내용</div>
     <p>
-      <!-- 세미나 후 토의 내용을 여기에 자유롭게 기록 -->
       세미나 후 주요 논의 사항을 여기에 기록합니다.
     </p>
   </div>
 
-  <!-- ── PDF Viewer ── -->
-  <div class="section">
-    <div class="section-label">슬라이드 / PDF</div>
-    <div class="pdf-wrapper">
-      <div class="pdf-toolbar">
-        <span>GroupViT_slides_20260320.pdf</span>
-        <a class="pdf-dl" href="../assets/pdfs/groupvit_slides.pdf" download>↓ Download</a>
-      </div>
-      <!--
-        PDF 파일을 assets/pdfs/ 에 넣은 뒤 아래 src 경로를 맞춰주세요.
-        브라우저가 PDF 내장 뷰어를 지원하지 않으면 fallback 링크가 보입니다.
-      -->
-      <object class="pdf-embed"
-              data="../assets/pdfs/groupvit_slides.pdf"
-              type="application/pdf">
-        <div class="pdf-fallback">
-          PDF를 표시할 수 없습니다.
-          <a href="../assets/pdfs/groupvit_slides.pdf">여기서 직접 다운로드</a>하세요.
-        </div>
-      </object>
-    </div>
-  </div>
-
-</div><!-- /container -->
+</div>
 
 <footer>
-  Lab Seminar Archive · <a href="../index.html" style="color:inherit;">← Back to list</a>
+  &copy; 2026 KMU AI Lab. All rights reserved. · <a href="index.html">← Back to list</a>
 </footer>
 
 </body>
