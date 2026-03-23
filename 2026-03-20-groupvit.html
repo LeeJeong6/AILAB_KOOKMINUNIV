@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -34,7 +34,7 @@
     body {
       background: var(--color-bg);
       color: var(--color-text);
-      font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+      font-family: 'Roboto', 'Noto Sans KR', sans-serif;
       font-size: 16px;
       line-height: 1.6;
     }
@@ -264,24 +264,24 @@
 </header>
 
 <div class="breadcrumb">
-  <a href="index.html">← Archive</a> / <a href="category.html?cat=paper">논문 세미나</a> / GroupViT
+  <a href="index.html">← Archive</a> / <a href="category.html?cat=paper">Paper Seminar</a> / GroupViT
 </div>
 
 <div class="container">
 
   <div class="session-header">
-    <div class="session-type-badge">논문 세미나</div>
+    <div class="session-type-badge">Paper Seminar</div>
     <h2 class="session-title">
       GroupViT: Semantic Segmentation Emerges from <em>Text Supervision</em>
     </h2>
     <div class="session-meta-grid">
       <div class="meta-item">
         <div class="meta-key">Date</div>
-        <div class="meta-val">2026년 3월 20일</div>
+        <div class="meta-val">March 20, 2026</div>
       </div>
       <div class="meta-item">
         <div class="meta-key">Presenter</div>
-        <div class="meta-val">이정익</div>
+        <div class="meta-val">Jeongik Lee</div>
       </div>
       <div class="meta-item">
         <div class="meta-key">Venue</div>
@@ -306,24 +306,24 @@
   </div>
 
   <div class="section">
-    <div class="section-label">Abstract (요약)</div>
-    <p>GroupViT은 텍스트 supervision만으로 pixel-level semantic segmentation을 학습하는 hierarchical grouping ViT 모델이다. 이미지를 점진적으로 의미 있는 그룹으로 병합하는 grouping block을 도입하여, 별도의 dense annotation 없이 zero-shot segmentation을 달성한다.</p>
+    <div class="section-label">Abstract</div>
+    <p>GroupViT is a hierarchical grouping ViT model that learns pixel-level semantic segmentation with only text supervision. It introduces grouping blocks that progressively merge images into meaningful groups, achieving zero-shot segmentation without any dense annotations.</p>
   </div>
 
   <div class="section">
-    <div class="section-label">핵심 포인트</div>
+    <div class="section-label">Key Points</div>
     <ul>
-      <li>Grouping tokens을 통해 visual segment를 bottom-up으로 학습</li>
-      <li>CLIP과 유사한 image-text contrastive loss로 학습</li>
-      <li>PASCAL VOC에서 52.3% mIoU (zero-shot)</li>
-      <li>Dense annotation 전혀 사용하지 않음</li>
+      <li>Learn visual segments bottom-up through grouping tokens</li>
+      <li>Trained with CLIP-like image-text contrastive loss</li>
+      <li>Achieves 52.3% mIoU on PASCAL VOC (zero-shot)</li>
+      <li>No dense annotations required whatsoever</li>
     </ul>
   </div>
 
   <div class="section">
-    <div class="section-label">토의 내용</div>
+    <div class="section-label">Discussion Notes</div>
     <p>
-      세미나 후 주요 논의 사항을 여기에 기록합니다.
+      Main discussion topics from the seminar session will be recorded here.
     </p>
   </div>
 

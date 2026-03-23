@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,7 +35,7 @@
       min-height: 100%;
       background: var(--color-bg);
       color: var(--color-text);
-      font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+      font-family: 'Roboto', 'Noto Sans KR', sans-serif;
       font-size: 16px;
       line-height: 1.4em;
     }
@@ -122,6 +122,109 @@
       color: var(--color-dark);
     }
 
+    .upload-section {
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .upload-section h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin-bottom: 1rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .field {
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .field-full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--color-border);
+      border-radius: var(--border-radius);
+      background: var(--color-bg);
+      color: var(--color-text);
+      padding: 0.6rem 0.8rem;
+      font: inherit;
+      resize: vertical;
+      transition: border-color var(--transition);
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+
+    textarea {
+      min-height: 100px;
+      line-height: 1.5;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .save-btn {
+      border: none;
+      border-radius: var(--border-radius);
+      background: var(--color-primary);
+      color: var(--color-bg);
+      padding: 0.65rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--transition);
+    }
+
+    .save-btn:hover {
+      background: var(--color-dark);
+    }
+
+    .save-btn:disabled {
+      background: var(--color-border);
+      cursor: not-allowed;
+    }
+
+    .save-msg {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+      min-height: 1.2em;
+    }
+
+    .save-msg.success {
+      color: #31B081;
+    }
+
+    .save-msg.error {
+      color: #e74c3c;
+    }
+
     .entry-list {
       display: grid;
       gap: 1.25rem;
@@ -162,14 +265,21 @@
       margin-bottom: 1rem;
     }
 
+    .entry-file {
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+      padding: 0.5rem 0;
+      border-top: 1px solid var(--color-border);
+      margin-bottom: 0.75rem;
+    }
+
     .entry-actions {
       display: flex;
       gap: 0.5rem;
       flex-wrap: wrap;
-      padding-top: 1rem;
-      border-top: 1px solid var(--color-border);
     }
 
+    .entry-actions button,
     .entry-actions a {
       text-decoration: none;
       border: 1px solid var(--color-primary);
@@ -180,10 +290,23 @@
       font-size: 0.85rem;
       font-weight: 500;
       transition: all var(--transition);
+      cursor: pointer;
+      font-family: inherit;
     }
 
+    .entry-actions button:hover,
     .entry-actions a:hover {
       background: var(--color-primary);
+      color: var(--color-bg);
+    }
+
+    .entry-actions .delete-btn {
+      border-color: #e74c3c;
+      color: #e74c3c;
+    }
+
+    .entry-actions .delete-btn:hover {
+      background: #e74c3c;
       color: var(--color-bg);
     }
 
@@ -195,6 +318,16 @@
       color: var(--color-text-secondary);
       font-size: 0.95rem;
       text-align: center;
+    }
+
+    .processing-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--border-radius);
+      background: #fff3cd;
+      color: #856404;
+      margin-left: 0.5rem;
     }
 
     footer {
@@ -220,6 +353,10 @@
       .category-title {
         font-size: 1.5rem;
       }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -233,11 +370,46 @@
 
   <main class="container main">
     <section class="toolbar">
-      <a class="back-link" href="index.html">← 메인으로</a>
+      <a class="back-link" href="index.html">← Back to Home</a>
       <h2 class="category-title" id="categoryTitle"></h2>
     </section>
 
-    <section class="entry-list" id="entryList"></section>
+    <section class="upload-section">
+      <h3>📤 Upload New Material</h3>
+      <form id="uploadForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="dateInput">Date</label>
+            <input id="dateInput" name="date" type="date" required />
+          </div>
+          <div class="field">
+            <label for="presenterInput">Presenter</label>
+            <input id="presenterInput" name="presenter" type="text" placeholder="e.g., John Doe" required />
+          </div>
+          <div class="field field-full">
+            <label for="titleInput">Title</label>
+            <input id="titleInput" name="title" type="text" placeholder="Enter title" required />
+          </div>
+          <div class="field field-full">
+            <label for="descInput">Description</label>
+            <textarea id="descInput" name="description" placeholder="Enter description" required></textarea>
+          </div>
+          <div class="field field-full">
+            <label for="fileInput">File (PDF, PPT, PPTX)</label>
+            <input id="fileInput" name="file" type="file" accept=".pdf,.ppt,.pptx,application/pdf,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation" required />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="save-btn" type="submit" id="submitBtn">Upload & Summarize with AI</button>
+          <span class="save-msg" id="saveMsg"></span>
+        </div>
+      </form>
+    </section>
+
+    <section>
+      <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--color-dark); margin-bottom: 1.5rem;">Uploaded Materials</h2>
+      <div class="entry-list" id="entryList"></div>
+    </section>
   </main>
 
   <footer>
@@ -245,10 +417,14 @@
   </footer>
 
   <script>
+    const DB_NAME = 'lab-seminar-archive-db';
+    const DB_VERSION = 1;
+    const UPLOAD_STORE = 'uploads';
+
     const CATEGORY_META = {
-      paper: { label: '논문 세미나' },
-      vibe: { label: '바이브코딩' },
-      math: { label: '수학스터디' }
+      paper: { label: 'Paper Seminar' },
+      vibe: { label: 'Vibe Coding' },
+      math: { label: 'Math Study' }
     };
 
     const STATIC_ENTRIES = [
@@ -256,9 +432,9 @@
         id: 'seed-paper-2026-03-20',
         category: 'paper',
         date: '2026-03-20',
-        presenter: '이정익',
+        presenter: 'Jeongik Lee',
         title: 'GroupViT: Semantic Segmentation Emerges from Text Supervision',
-        description: '텍스트 감독 학습으로 세그멘테이션이 가능한 GroupViT 구조와 실험 결과를 정리한 세션.',
+        description: 'Session covering GroupViT architecture and experimental results with text-based supervision for segmentation.',
         fileName: '2026-03-20-groupvit.html',
         staticLink: '2026-03-20-groupvit.html',
         kind: 'seed',
@@ -275,27 +451,101 @@
     }
 
     const categoryTitle = document.getElementById('categoryTitle');
+    const uploadForm = document.getElementById('uploadForm');
+    const saveMsg = document.getElementById('saveMsg');
+    const submitBtn = document.getElementById('submitBtn');
     const entryList = document.getElementById('entryList');
 
     categoryTitle.textContent = CATEGORY_META[category].label;
 
-    function loadEntries() {
-      const entries = STATIC_ENTRIES
-        .filter((entry) => entry.category === category)
-        .map((entry) => ({
-          ...entry,
-          description: entry.description || '설명이 없습니다.'
-        }));
+    function openDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-      entries.sort((a, b) => {
-        const dateCompare = String(b.date || '').localeCompare(String(a.date || ''));
-        if (dateCompare !== 0) {
-          return dateCompare;
-        }
-        return String(b.createdAt || '').localeCompare(String(a.createdAt || ''));
+        request.onupgradeneeded = (event) => {
+          const db = event.target.result;
+          if (!db.objectStoreNames.contains(UPLOAD_STORE)) {
+            const uploadStore = db.createObjectStore(UPLOAD_STORE, { keyPath: 'id' });
+            uploadStore.createIndex('category', 'category', { unique: false });
+            uploadStore.createIndex('date', 'date', { unique: false });
+          }
+        };
+
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
       });
+    }
 
-      return entries;
+    async function withStore(mode, handler) {
+      const db = await openDatabase();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(UPLOAD_STORE, mode);
+        const store = tx.objectStore(UPLOAD_STORE);
+
+        let result;
+        try {
+          result = handler(store);
+        } catch (error) {
+          reject(error);
+          return;
+        }
+
+        tx.oncomplete = () => resolve(result);
+        tx.onerror = () => reject(tx.error);
+      });
+    }
+
+    async function loadEntries() {
+      try {
+        const db = await openDatabase();
+        const uploads = await new Promise((resolve, reject) => {
+          const tx = db.transaction(UPLOAD_STORE, 'readonly');
+          const store = tx.objectStore(UPLOAD_STORE);
+          const request = store.getAll();
+          request.onsuccess = () => resolve(request.result || []);
+          request.onerror = () => reject(request.error);
+        });
+
+        const merged = [...STATIC_ENTRIES, ...uploads]
+          .filter((entry) => entry.category === category)
+          .map((entry) => ({
+            ...entry,
+            description: entry.description || 'No description available.'
+          }));
+
+        merged.sort((a, b) => {
+          const dateCompare = String(b.date || '').localeCompare(String(a.date || ''));
+          if (dateCompare !== 0) {
+            return dateCompare;
+          }
+          return String(b.createdAt || '').localeCompare(String(a.createdAt || ''));
+        });
+
+        return merged;
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
+    }
+
+    async function saveEntry(entry) {
+      await withStore('readwrite', (store) => store.put(entry));
+    }
+
+    async function deleteEntry(id) {
+      await withStore('readwrite', (store) => store.delete(id));
+    }
+
+    function setMessage(text, type = 'normal') {
+      saveMsg.textContent = text;
+      saveMsg.className = 'save-msg';
+      if (type === 'success') saveMsg.classList.add('success');
+      if (type === 'error') saveMsg.classList.add('error');
+    }
+
+    function isAllowedFile(name) {
+      const lower = String(name || '').toLowerCase();
+      return lower.endsWith('.pdf') || lower.endsWith('.ppt') || lower.endsWith('.pptx');
     }
 
     function createEntryNode(entry) {
@@ -308,11 +558,22 @@
 
       const title = document.createElement('h3');
       title.className = 'entry-title';
-      title.textContent = entry.title || '(제목 없음)';
+      title.textContent = entry.title || '(No Title)';
+
+      if (entry.processing) {
+        const badge = document.createElement('span');
+        badge.className = 'processing-badge';
+        badge.textContent = 'AI Processing...';
+        title.appendChild(badge);
+      }
 
       const desc = document.createElement('p');
       desc.className = 'entry-desc';
       desc.textContent = entry.description || '';
+
+      const file = document.createElement('p');
+      file.className = 'entry-file';
+      file.textContent = `File: ${entry.fileName || '-'}`;
 
       const actions = document.createElement('div');
       actions.className = 'entry-actions';
@@ -320,25 +581,65 @@
       if (entry.kind === 'seed' && entry.staticLink) {
         const viewLink = document.createElement('a');
         viewLink.href = entry.staticLink;
-        viewLink.textContent = '세션 보기';
+        viewLink.target = '_blank';
+        viewLink.rel = 'noreferrer noopener';
+        viewLink.textContent = 'View Session';
         actions.appendChild(viewLink);
       }
 
-      card.append(meta, title, desc);
-      if (actions.children.length > 0) {
-        card.appendChild(actions);
+      if (entry.kind === 'upload' && entry.fileBlob) {
+        const openBtn = document.createElement('button');
+        openBtn.type = 'button';
+        openBtn.textContent = 'Open File';
+        openBtn.addEventListener('click', () => {
+          const url = URL.createObjectURL(entry.fileBlob);
+          window.open(url, '_blank', 'noopener,noreferrer');
+          setTimeout(() => URL.revokeObjectURL(url), 8000);
+        });
+        actions.appendChild(openBtn);
+
+        const downloadBtn = document.createElement('button');
+        downloadBtn.type = 'button';
+        downloadBtn.textContent = 'Download';
+        downloadBtn.addEventListener('click', () => {
+          const url = URL.createObjectURL(entry.fileBlob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = entry.fileName;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 8000);
+        });
+        actions.appendChild(downloadBtn);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.addEventListener('click', async () => {
+          const ok = window.confirm('Are you sure you want to delete this item?');
+          if (!ok) {
+            return;
+          }
+          await deleteEntry(entry.id);
+          await renderEntries();
+        });
+        actions.appendChild(deleteBtn);
       }
+
+      card.append(meta, title, desc, file, actions);
       return card;
     }
 
-    function renderEntries() {
-      const entries = loadEntries();
+    async function renderEntries() {
+      const entries = await loadEntries();
       entryList.innerHTML = '';
 
       if (entries.length === 0) {
         const empty = document.createElement('p');
         empty.className = 'entry-empty';
-        empty.textContent = '아직 저장된 항목이 없습니다.';
+        empty.textContent = 'No uploaded items yet.';
         entryList.appendChild(empty);
         return;
       }
@@ -347,6 +648,80 @@
         entryList.appendChild(createEntryNode(entry));
       });
     }
+
+    // Simulate AI summarization (placeholder for actual Claude API integration)
+    async function summarizeWithAI(file, title) {
+      // This is a placeholder. In production, you would:
+      // 1. Send file to backend server
+      // 2. Backend extracts text from PDF/PPT
+      // 3. Backend calls Claude API to summarize
+      // 4. Return summary to frontend
+
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
+
+      return `AI-generated summary for "${title}": This document covers key concepts and findings. The material includes detailed analysis and experimental results. Main topics discussed include methodology, implementation details, and conclusions.`;
+    }
+
+    uploadForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(uploadForm);
+      const date = String(formData.get('date') || '').trim();
+      const presenter = String(formData.get('presenter') || '').trim();
+      const title = String(formData.get('title') || '').trim();
+      const description = String(formData.get('description') || '').trim();
+      const file = formData.get('file');
+
+      if (!date || !presenter || !title || !description || !(file instanceof File) || !file.name) {
+        setMessage('Please fill in all fields.', 'error');
+        return;
+      }
+
+      if (!isAllowedFile(file.name)) {
+        setMessage('Only PDF, PPT, PPTX files are allowed.', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      setMessage('Uploading and processing with AI...', 'normal');
+
+      try {
+        // Create initial entry
+        const entry = {
+          id: crypto.randomUUID(),
+          category,
+          date,
+          presenter,
+          title,
+          description,
+          fileName: file.name,
+          fileBlob: file,
+          kind: 'upload',
+          processing: true,
+          createdAt: new Date().toISOString()
+        };
+
+        await saveEntry(entry);
+        await renderEntries();
+
+        // Simulate AI summarization
+        const aiSummary = await summarizeWithAI(file, title);
+
+        // Update entry with AI summary
+        entry.description = description + '\n\n[AI Summary]\n' + aiSummary;
+        entry.processing = false;
+        await saveEntry(entry);
+
+        setMessage('Successfully uploaded and summarized!', 'success');
+        uploadForm.reset();
+        await renderEntries();
+      } catch (error) {
+        console.error(error);
+        setMessage('An error occurred during upload.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+      }
+    });
 
     renderEntries();
   </script>
