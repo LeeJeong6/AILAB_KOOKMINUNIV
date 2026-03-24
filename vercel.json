@@ -1,10 +1,4 @@
 {
-  "functions": {
-    "api/*.js": {
-      "memory": 1024,
-      "maxDuration": 30
-    }
-  },
   "headers": [
     {
       "source": "/api/(.*)",
@@ -15,7 +9,7 @@
         },
         {
           "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, POST, OPTIONS"
+          "value": "GET, POST, OPTIONS"
         },
         {
           "key": "Access-Control-Allow-Headers",
