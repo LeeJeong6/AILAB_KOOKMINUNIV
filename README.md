@@ -1,40 +1,242 @@
-# Lab Seminar Archive (GitHub Pages)
+# Lab Seminar Archive
 
-## 계획(Plan)
+A comprehensive web application for managing and archiving lab seminar materials with AI-powered summarization using Claude API.
 
-이번 수정의 목표는 사용자가 요청한 UI/UX 방향에 맞춰 페이지를 단순화하고,
-카테고리 진입 흐름을 별도 페이지 이동 구조로 변경하는 것입니다.
+## Features
 
-1. 메인 레이아웃 변경
-- 배경을 흰색으로 통일
-- 상단에 파란색 띠 추가
-- 페이지 상단 중앙에 타이틀 배치
-- 타이틀 클릭 시 최상단으로 스크롤
+✨ **File Upload & Management**
+- Upload PDF, PPT, PPTX files
+- Download and view uploaded materials
+- Delete uploaded files
 
-2. 링크/텍스트 정리
-- 타이틀 아래 파란색 네모 링크 박스 배치
-- 링크 텍스트는 `KMU AI LAB`만 표시
-- 불필요한 부가 설명 문구 제거
+🤖 **AI-Powered Summarization**
+- Automatic content summarization using Claude API
+- Smart extraction of key points and topics
 
-3. 카테고리 이동 방식 개편
-- 카테고리 카드를 크게 표시
-- 3개를 가로 버튼으로 두는 대신 클릭 시 `category.html?cat=...`로 이동
+🎙️ **Study Session Recording**
+- Record audio during study sessions
+- Automatic transcription and summarization
+- Speaker identification support
 
-4. 노션식 미리보기 흐름
-- 카테고리 페이지에서 입력 항목: 날짜, 발표자, 제목, 설명, 파일(PDF/PPT/PPTX)
-- 업로드 저장 후 메인 페이지에서 제목/설명 미리보기 카드로 노출
-- 저장소는 정적 환경 제약상 브라우저 `IndexedDB` 사용
+🎨 **Modern UI**
+- Clean, professional design matching KMU AI Lab theme
+- Responsive layout for all devices
+- Smooth animations and transitions
 
-## 파일 구조
+## Quick Start
 
-- `index.html`: 메인 페이지 (카테고리 진입 + 카테고리별 미리보기)
-- `category.html`: 카테고리별 업로드/목록 페이지
-- `2026-03-20-groupvit.html`: 기존 샘플 세션 페이지
-- `README.md`: 계획 문서
-- `RESULT.md`: 결과 및 분석 문서(한국어)
+### Prerequisites
 
-## 사용 방법
+- Node.js (v16 or higher)
+- npm or yarn
+- Claude API key (stored in `claudeapi.txt`)
 
-1. `index.html`에서 카테고리 카드 클릭
-2. 이동한 카테고리 페이지에서 날짜/발표자/제목/설명/파일 입력 후 저장
-3. 메인 페이지로 돌아오면 카테고리별 Preview 영역에서 미리보기 확인
+### Installation
+
+1. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Ensure API key is set**
+   Your Claude API key should already be in `claudeapi.txt`. The server will read it automatically.
+
+3. **Start the server**
+   ```bash
+   npm start
+   ```
+
+   The server will start on `http://localhost:3000`
+
+4. **Open the application**
+   - Open your browser
+   - Navigate to `http://localhost:3000/index.html`
+
+## Usage Guide
+
+### 1. Main Page (index.html)
+
+**Start Study Session**
+- Click the "🎙️ Start Study Session" button
+- Grant microphone permissions
+- Recording starts automatically with timer
+- Click "Stop Recording" when done
+- Audio is automatically transcribed and summarized using Claude AI
+- Results are saved to the archive
+
+**Browse Categories**
+- Click on any category card (Paper Seminar, Vibe Coding, Math Study)
+- View materials for that category
+
+**Navigation**
+- Click "Lab Seminar Archive" title to return to main page from anywhere
+
+### 2. Category Pages (category.html)
+
+**Upload Materials**
+1. Select date, presenter name
+2. Enter title and description
+3. Choose file (PDF, PPT, or PPTX)
+4. Click "Upload & Summarize with AI"
+5. Wait for AI processing (takes 5-10 seconds)
+6. File is saved with AI-generated summary
+
+**View Materials**
+- All uploaded materials appear in chronological order
+- Click "Open File" to view in browser
+- Click "Download" to save locally
+- Click "Delete" to remove from archive
+
+### 3. Individual Session Pages
+
+- View detailed information about specific seminars
+- See presenter, date, venue, authors
+- Read abstract, key points, and discussion notes
+
+## API Endpoints
+
+The backend server provides these endpoints:
+
+### POST /api/transcribe-audio
+Transcribes and summarizes audio recordings.
+
+**Request:**
+- `audio`: Audio file (WebM format)
+- `sessionTitle`: Title of the session
+- `speakerCount`: Number of speakers
+
+**Response:**
+```json
+{
+  "success": true,
+  "transcription": "Full transcription...",
+  "summary": "AI-generated summary...",
+  "timestamp": "2026-03-23T..."
+}
+```
+
+### POST /api/summarize-file
+Summarizes uploaded documents.
+
+**Request:**
+- `file`: Document file (PDF, PPT, PPTX)
+- `title`: Document title
+- `description`: User-provided description
+- `category`: Category (paper/vibe/math)
+- `presenter`: Presenter name
+- `date`: Presentation date
+
+**Response:**
+```json
+{
+  "success": true,
+  "summary": "AI-generated summary...",
+  "timestamp": "2026-03-23T..."
+}
+```
+
+### GET /api/health
+Health check endpoint.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "claudeApiInitialized": true,
+  "timestamp": "2026-03-23T..."
+}
+```
+
+## Project Structure
+
+```
+/raid/lab-seminar/
+├── index.html              # Main page
+├── category.html           # Category listing page
+├── 2026-03-20-groupvit.html # Example seminar session page
+├── server.js               # Backend API server
+├── package.json            # Node.js dependencies
+├── claudeapi.txt          # Claude API key (keep secure!)
+├── README.md              # This file
+└── BACKEND_API_GUIDE.md   # Detailed API documentation
+```
+
+## Data Storage
+
+The application uses **IndexedDB** for client-side storage:
+- Database: `lab-seminar-archive-db`
+- Object Store: `uploads`
+- Stores uploaded files as Blobs with metadata
+- Persists across browser sessions
+- No server-side database required
+
+## Security Notes
+
+⚠️ **Important:**
+- Keep `claudeapi.txt` secure and never commit to public repositories
+- The backend server reads the API key from this file
+- Consider adding authentication for production use
+- Implement rate limiting to prevent API abuse
+
+## Development
+
+**Run in development mode with auto-reload:**
+```bash
+npm run dev
+```
+
+**Project uses:**
+- Express.js for backend server
+- Anthropic SDK for Claude API integration
+- Multer for file upload handling
+- CORS enabled for development
+
+## Troubleshooting
+
+**"Failed to process audio" error:**
+- Check that the backend server is running (`npm start`)
+- Verify Claude API key in `claudeapi.txt`
+- Check browser console for detailed errors
+
+**"AI Processing failed" message:**
+- Ensure backend server is accessible at `http://localhost:3000`
+- Check server logs for API errors
+- Verify API key is valid
+
+**Microphone not working:**
+- Grant microphone permissions when prompted
+- Check browser settings (chrome://settings/content/microphone)
+- Ensure no other application is using the microphone
+
+**Files not uploading:**
+- Check file size (max 50MB)
+- Verify file type (PDF, PPT, PPTX only)
+- Check browser console for errors
+
+## Future Enhancements
+
+Potential improvements:
+- [ ] Real speech-to-text integration (AssemblyAI, Deepgram)
+- [ ] Multi-speaker diarization
+- [ ] PDF text extraction for better summarization
+- [ ] User authentication and permissions
+- [ ] Cloud storage integration
+- [ ] Search and filtering capabilities
+- [ ] Export to PDF/Markdown
+
+## License
+
+MIT License - KMU AI Lab 2026
+
+## Support
+
+For issues or questions:
+1. Check console logs (F12 in browser)
+2. Verify server is running
+3. Check API key validity
+4. Review `BACKEND_API_GUIDE.md` for API details
+
+---
+
+**Developed for KMU AI Lab**
+Powered by Claude AI

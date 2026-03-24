@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# API Keys - 절대 업로드 금지!
+claudeapi.txt
+.env
+
+# Server (Vercel serverless 함수 사용)
+server.js
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.swp

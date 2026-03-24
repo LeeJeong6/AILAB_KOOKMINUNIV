@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <script src="config.js"></script>
   <style>
     :root {
       --color-primary: #6A7C9C;
@@ -64,6 +65,12 @@
       font-weight: 700;
       color: var(--color-dark);
       margin: 0;
+      cursor: pointer;
+      transition: color var(--transition);
+    }
+
+    .site-title:hover {
+      color: var(--color-primary);
     }
 
     .lab-link {
@@ -417,6 +424,7 @@
   </footer>
 
   <script>
+    const API_BASE_URL = API_CONFIG.API_BASE_URL;
     const DB_NAME = 'lab-seminar-archive-db';
     const DB_VERSION = 1;
     const UPLOAD_STORE = 'uploads';
@@ -649,17 +657,33 @@
       });
     }
 
-    // Simulate AI summarization (placeholder for actual Claude API integration)
-    async function summarizeWithAI(file, title) {
-      // This is a placeholder. In production, you would:
-      // 1. Send file to backend server
-      // 2. Backend extracts text from PDF/PPT
-      // 3. Backend calls Claude API to summarize
-      // 4. Return summary to frontend
+    // Real AI summarization using Claude API
+    async function summarizeWithAI(file, title, description, presenter, date) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('title', title);
+        formData.append('description', description);
+        formData.append('category', category);
+        formData.append('presenter', presenter);
+        formData.append('date', date);
 
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
+        const response = await fetch(`${API_BASE_URL}/summarize-file`, {
+          method: 'POST',
+          body: formData
+        });
 
-      return `AI-generated summary for "${title}": This document covers key concepts and findings. The material includes detailed analysis and experimental results. Main topics discussed include methodology, implementation details, and conclusions.`;
+        if (!response.ok) {
+          throw new Error('Failed to summarize file');
+        }
+
+        const result = await response.json();
+        return result.summary;
+
+      } catch (error) {
+        console.error('Error calling AI summarization:', error);
+        return `[AI Summarization failed - please check backend server]\n\nOriginal description: ${description}`;
+      }
     }
 
     uploadForm.addEventListener('submit', async (event) => {
@@ -704,8 +728,8 @@
         await saveEntry(entry);
         await renderEntries();
 
-        // Simulate AI summarization
-        const aiSummary = await summarizeWithAI(file, title);
+        // Real AI summarization
+        const aiSummary = await summarizeWithAI(file, title, description, presenter, date);
 
         // Update entry with AI summary
         entry.description = description + '\n\n[AI Summary]\n' + aiSummary;
@@ -721,6 +745,11 @@
       } finally {
         submitBtn.disabled = false;
       }
+    });
+
+    // Add click handler for site title
+    document.querySelector('.site-title').addEventListener('click', () => {
+      window.location.href = 'index.html';
     });
 
     renderEntries();

@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <script src="config.js"></script>
   <style>
     :root {
       --color-primary: #6A7C9C;
@@ -65,6 +66,12 @@
       font-weight: 700;
       color: var(--color-dark);
       margin: 0;
+      cursor: pointer;
+      transition: color var(--transition);
+    }
+
+    .site-title:hover {
+      color: var(--color-primary);
     }
 
     .header-actions {
@@ -456,6 +463,7 @@
   </div>
 
   <script>
+    const API_BASE_URL = API_CONFIG.API_BASE_URL;
     const DB_NAME = 'lab-seminar-archive-db';
     const DB_VERSION = 1;
     const UPLOAD_STORE = 'uploads';
@@ -669,30 +677,83 @@
       const timestamp = new Date().toISOString();
       const fileName = `study-session-${timestamp}.webm`;
 
-      const entry = {
-        id: crypto.randomUUID(),
-        category: 'recording',
-        date: timestamp.split('T')[0],
-        presenter: 'Study Session',
-        title: `Recording - ${new Date().toLocaleString()}`,
-        description: 'Audio recording of study session. Processing for transcription...',
-        fileName: fileName,
-        fileBlob: audioBlob,
-        kind: 'recording',
-        createdAt: timestamp
-      };
+      // Send to backend for transcription and summarization
+      try {
+        const formData = new FormData();
+        formData.append('audio', audioBlob, fileName);
+        formData.append('sessionTitle', 'Study Session');
+        formData.append('speakerCount', '3');
 
-      await new Promise((resolve, reject) => {
-        const tx = db.transaction(UPLOAD_STORE, 'readwrite');
-        const store = tx.objectStore(UPLOAD_STORE);
-        const request = store.put(entry);
-        tx.oncomplete = () => resolve();
-        tx.onerror = () => reject(tx.error);
-      });
+        const response = await fetch(`${API_BASE_URL}/transcribe-audio`, {
+          method: 'POST',
+          body: formData
+        });
 
-      alert('Recording saved successfully! It will be processed for transcription.');
-      renderPreviewBoard();
+        if (!response.ok) {
+          throw new Error('Failed to process audio');
+        }
+
+        const result = await response.json();
+
+        // Save with AI-generated summary
+        const entry = {
+          id: crypto.randomUUID(),
+          category: 'paper', // or determine from content
+          date: timestamp.split('T')[0],
+          presenter: 'Study Session',
+          title: `Study Session - ${new Date().toLocaleDateString()}`,
+          description: `${result.summary}\n\n[Transcription]\n${result.transcription}`,
+          fileName: fileName,
+          fileBlob: audioBlob,
+          kind: 'recording',
+          createdAt: timestamp
+        };
+
+        await new Promise((resolve, reject) => {
+          const tx = db.transaction(UPLOAD_STORE, 'readwrite');
+          const store = tx.objectStore(UPLOAD_STORE);
+          const request = store.put(entry);
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+
+        alert('Recording saved and summarized successfully!');
+        renderPreviewBoard();
+
+      } catch (error) {
+        console.error('Error processing recording:', error);
+
+        // Fallback: save without AI summary
+        const entry = {
+          id: crypto.randomUUID(),
+          category: 'paper',
+          date: timestamp.split('T')[0],
+          presenter: 'Study Session',
+          title: `Study Session - ${new Date().toLocaleDateString()}`,
+          description: 'Audio recording of study session. (Processing failed - please check backend server)',
+          fileName: fileName,
+          fileBlob: audioBlob,
+          kind: 'recording',
+          createdAt: timestamp
+        };
+
+        await new Promise((resolve, reject) => {
+          const tx = db.transaction(UPLOAD_STORE, 'readwrite');
+          const store = tx.objectStore(UPLOAD_STORE);
+          const request = store.put(entry);
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+
+        alert('Recording saved, but AI processing failed. Please check if the backend server is running.');
+        renderPreviewBoard();
+      }
     }
+
+    // Add click handler for site title
+    document.querySelector('.site-title').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
 
     renderPreviewBoard();
   </script>

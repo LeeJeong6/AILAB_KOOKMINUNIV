@@ -63,6 +63,12 @@
       font-weight: 700;
       color: var(--color-dark);
       margin: 0;
+      cursor: pointer;
+      transition: color var(--transition);
+    }
+
+    .site-title:hover {
+      color: var(--color-primary);
     }
 
     .lab-link {
@@ -332,6 +338,13 @@
 <footer>
   &copy; 2026 KMU AI Lab. All rights reserved. · <a href="index.html">← Back to list</a>
 </footer>
+
+<script>
+  // Add click handler for site title
+  document.querySelector('.site-title').addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+</script>
 
 </body>
 </html>
