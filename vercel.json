@@ -1,25 +1,10 @@
 {
-  "version": 2,
   "functions": {
-    "api/**/*.js": {
+    "api/*.js": {
       "memory": 1024,
       "maxDuration": 30
     }
   },
-  "rewrites": [
-    {
-      "source": "/api/transcribe-audio",
-      "destination": "/api/transcribe-audio.js"
-    },
-    {
-      "source": "/api/summarize-file",
-      "destination": "/api/summarize-file.js"
-    },
-    {
-      "source": "/api/health",
-      "destination": "/api/health.js"
-    }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
@@ -30,11 +15,11 @@
         },
         {
           "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, OPTIONS"
+          "value": "GET, POST, POST, OPTIONS"
         },
         {
           "key": "Access-Control-Allow-Headers",
-          "value": "X-Requested-With, Content-Type, Accept"
+          "value": "Content-Type"
         }
       ]
     }
